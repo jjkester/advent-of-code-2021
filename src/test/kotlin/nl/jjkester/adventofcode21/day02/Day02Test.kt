@@ -13,8 +13,7 @@ internal class Day02Test {
         "forward 8",
         "up 3",
         "down 8",
-        "forward 2",
-        ""
+        "forward 2"
     )
     private val instructions = listOf(
         "forward" to 5,
