@@ -3,8 +3,6 @@ package nl.jjkester.adventofcode21.day03
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-import org.junit.jupiter.api.Assertions.*
-
 internal class Day03Test {
     val values = listOf(
         "00100",

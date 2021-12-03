@@ -28,12 +28,13 @@ object Day01 : D {
         .map { it.sum() }
         .windowedPairs()
         .count { it.isIncreasing() }
+
+    private fun <T> Sequence<T>.windowedPairs() = this.windowed(2).map { it[0] to it[1] }
+
+    private fun Pair<Int, Int>.isIncreasing() = first < second
+
+    @JvmStatic
+    fun main(args: Array<String>) {
+        main()
+    }
 }
-
-fun main() {
-    Day01.main()
-}
-
-private fun <T> Sequence<T>.windowedPairs() = this.windowed(2).map { it[0] to it[1] }
-
-private fun Pair<Int, Int>.isIncreasing() = first < second

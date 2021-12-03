@@ -5,11 +5,13 @@ import nl.jjkester.adventofcode21.boilerplate.format
 import nl.jjkester.adventofcode21.day01.Day01
 import nl.jjkester.adventofcode21.day02.Day02
 import nl.jjkester.adventofcode21.day03.Day03
+import nl.jjkester.adventofcode21.day04.Day04
 
 val days = setOf(
     Day01,
     Day02,
     Day03,
+    Day04,
 )
 
 fun main(args: Array<String>) {
@@ -17,11 +19,11 @@ fun main(args: Array<String>) {
 
     days.map { it.day }
         .run {
-            when (args.getOrNull(0)) {
-                "latest" -> this.maxByOrNull { it.day }?.let(::listOf) ?: emptyList()
+            when (val arg = args.getOrNull(0)) {
+                "latest" -> this.maxByOrNull { it.day }?.let(::listOf)
                 null -> this
-                else -> emptyList()
-            }
+                else -> arg.toIntOrNull()?.let { i -> this.filter { it.day == i } }
+            } ?: emptyList()
         }
         .map { it() }
         .sorted()

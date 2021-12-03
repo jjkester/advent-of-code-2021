@@ -6,7 +6,7 @@ annotation class AdventMarker
 @AdventMarker
 class DayBuilder(val day: Int) {
     val parts = mutableListOf<PartBuilder>()
-    val inputs = mutableMapOf<String, Input>()
+    val inputs = mutableMapOf<String, ResourceInput>()
 
     operator fun invoke() = Day(day, parts.map { it() })
 }
@@ -28,8 +28,8 @@ fun DayBuilder.part(body: PartBuilder.() -> Unit) = PartBuilder(this.parts.size 
     .apply(parts::add)
 
 @AdventMarker
-fun DayBuilder.input(filename: () -> String): Input =
-    inputs.computeIfAbsent(filename.invoke()) { Input("/day%02d/%s".format(day, it)) }
+fun DayBuilder.input(filename: () -> String): ResourceInput =
+    inputs.computeIfAbsent(filename.invoke()) { ResourceInput("/day%02d/%s".format(day, it)) }
 
 @AdventMarker
 fun PartBuilder.answer(description: String, body: () -> Int) = Answer(description, body)

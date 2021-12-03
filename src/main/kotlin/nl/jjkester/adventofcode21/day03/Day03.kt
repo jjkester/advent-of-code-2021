@@ -83,8 +83,9 @@ object Day03 : D {
     private fun Iterable<Int>.binaryToInt() = apply { require(all { it == 0 || it == 1 }) }
         .joinToString("")
         .toInt(2)
-}
 
-fun main() {
-    Day03.main()
+    @JvmStatic
+    fun main(args: Array<String>) {
+        main()
+    }
 }

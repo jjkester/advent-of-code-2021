@@ -65,8 +65,9 @@ object Day02 : D {
         this.second + verticalMovementFromHorizontalAndPitch(second, this),
         third + second.third
     )
-}
 
-fun main() {
-    Day02.main()
+    @JvmStatic
+    fun main(args: Array<String>) {
+        main()
+    }
 }
