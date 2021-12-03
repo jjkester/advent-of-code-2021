@@ -4,7 +4,7 @@ import nl.jjkester.adventofcode21.boilerplate.*
 
 object Day02 : D {
     override val day = day(2) {
-        val values = input { "course.txt" }.lines()
+        val values = input { "course.txt" }.notEmptyLines()
         val instructions = parseInstructions(values)
 
         part {
@@ -21,7 +21,6 @@ object Day02 : D {
     }
 
     fun parseInstructions(values: List<String>) = values.asSequence()
-        .filter(String::isNotEmpty)
         .map { it.split(" ", limit = 2) }
         .map { it[0] to it[1].toInt() }
         .toList()

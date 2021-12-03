@@ -10,5 +10,7 @@ class Input(private val resourcePath: String) {
 
     fun lines() = contents?.split(System.lineSeparator()) ?: emptyList()
 
-    fun ints() = lines().filter(String::isNotEmpty).map(String::toInt)
+    fun notEmptyLines() = lines().filter(String::isNotEmpty)
+
+    fun ints() = notEmptyLines().map(String::toInt)
 }
