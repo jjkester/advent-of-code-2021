@@ -4,8 +4,12 @@ import nl.jjkester.adventofcode21.boilerplate.*
 
 object Day02 : D {
     override val day = day(2) {
-        val values = input { "course.txt" }.notEmptyLines()
-        val instructions = parseInstructions(values)
+        val instructions by input("course.txt") {
+            lineSeparated()
+                .notEmpty()
+                .strings()
+                .let(::parseInstructions)
+        }
 
         part {
             answer("Multiplication of horizontal position and depth") {

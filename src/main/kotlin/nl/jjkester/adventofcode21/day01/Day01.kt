@@ -4,7 +4,11 @@ import nl.jjkester.adventofcode21.boilerplate.*
 
 object Day01 : D {
     override val day = day(1) {
-        val values = input { "sonar.txt" }.ints()
+        val values by input("sonar.txt") {
+            lineSeparated()
+                .notEmpty()
+                .ints()
+        }
 
         part {
             answer("Number of increasing individual depth measurements") {

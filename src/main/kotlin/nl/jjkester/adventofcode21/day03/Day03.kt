@@ -5,7 +5,11 @@ import kotlin.math.pow
 
 object Day03 : D {
     override val day = day(3) {
-        val values = input { "report.txt" }.notEmptyLines()
+        val values by input("report.txt") {
+            lineSeparated()
+                .notEmpty()
+                .strings()
+        }
 
         part {
             answer("Power consumption") {

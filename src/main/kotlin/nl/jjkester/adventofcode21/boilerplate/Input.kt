@@ -1,34 +1,68 @@
 package nl.jjkester.adventofcode21.boilerplate
 
+import java.lang.Integer.max
+import java.lang.Integer.min
+
 interface Input {
-    val contents: String?
-    val available get() = contents != null
+    val contents: String
 }
 
 class StringInput(override val contents: String) : Input
 
-class ResourceInput(private val resourcePath: String) : Input {
+class ResourceInput(val resourcePath: String) : Input {
+    private val resource by lazy {
+        requireNotNull({}.javaClass.getResource(resourcePath)) { "Resource not found: $resourcePath" }
+    }
+
     override val contents by lazy {
-        {}.javaClass.getResource(resourcePath)?.readText()
+        resource.readText()
     }
 }
 
-fun Input.sections() = contents?.split(System.lineSeparator() + System.lineSeparator())
-    ?.map { StringInput(it) } ?: emptyList()
+// Splitters
 
-fun Input.text() = contents ?: ""
+fun Input.sectionSeparated(): List<Input> = contents
+    .splitOnSectionSeparator()
+    .toInputList()
 
-fun Input.lines() = contents?.split(System.lineSeparator()) ?: emptyList()
+fun Input.lineSeparated(): List<Input> = contents
+    .splitOnLineSeparator()
+    .toInputList()
 
-fun Input.notEmptyLines() = lines().filter(String::isNotEmpty)
+fun Input.commaSeparated(): List<Input> = contents
+    .splitOnRegex(Regex(",\\s*", RegexOption.MULTILINE))
+    .toInputList()
 
-fun Input.ints() = notEmptyLines().map(String::toInt)
+fun Input.whitespaceSeparated(): List<Input> = contents
+    .splitOnRegex(Regex("\\s+", RegexOption.MULTILINE))
+    .toInputList()
 
-fun Input.commaSeparated() = lines().map { it.split(Regex(", *")) }
-    .flatten()
-    .joinToString(System.lineSeparator())
-    .let { StringInput(it) }
+// Filters
 
-fun Input.spaceSeparated() = lines().map { it.split(Regex(" *")) }
-    .joinToString(System.lineSeparator())
-    .let { StringInput(it) }
+fun List<Input>.notEmpty(): List<Input> = filter { it.string().isNotEmpty() }
+
+fun List<Input>.skip(n: Int): List<Input> = subList(min(this.size, n), this.size)
+
+fun List<Input>.head(size: Int): List<Input> = subList(0, min(size, this.size))
+
+fun List<Input>.tail(size: Int): List<Input> = subList(max(0, this.size - size), this.size)
+
+// Processors
+
+fun Input.string(): String = contents
+
+fun Input.int(): Int = contents.toInt()
+
+fun List<Input>.strings(): List<String> = map(Input::string)
+
+fun List<Input>.ints(): List<Int> = map(Input::int)
+
+// Private utilities
+
+private fun String?.splitOnLineSeparator() = this?.split(System.lineSeparator()) ?: emptyList()
+
+private fun String?.splitOnSectionSeparator() = this?.split(System.lineSeparator().repeat(2)) ?: emptyList()
+
+private fun String?.splitOnRegex(regex: Regex) = this?.split(regex) ?: emptyList()
+
+private fun Iterable<String>?.toInputList() = this?.map(::StringInput) ?: emptyList()

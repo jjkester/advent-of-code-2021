@@ -4,17 +4,26 @@ import nl.jjkester.adventofcode21.boilerplate.*
 
 object Day04 : D {
     override val day = day(4) {
-        val input = input { "bingo.txt" }.sections()
-        val draws = input.first().commaSeparated().ints()
-        val boards = input.subList(1, input.size)
-            .map { boardInput ->
-                boardInput.notEmptyLines()
-                    .map { row ->
-                        row.trim().split(Regex(" +"))
-                            .map { it.toIntOrNull() }
-                            .requireNoNulls()
-                    }
-            }
+        val draws by input("bingo.txt") {
+            sectionSeparated()
+                .first()
+                .commaSeparated()
+                .ints()
+        }
+
+        val boards by input("bingo.txt") {
+            sectionSeparated()
+                .skip(1)
+                .map { boardInput ->
+                    boardInput.lineSeparated()
+                        .notEmpty()
+                        .map { row ->
+                            row.whitespaceSeparated()
+                                .notEmpty()
+                                .ints()
+                        }
+                }
+        }
 
         part {
             answer("Final score of winning board") {

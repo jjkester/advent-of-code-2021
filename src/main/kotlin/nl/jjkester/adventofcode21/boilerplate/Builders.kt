@@ -28,8 +28,9 @@ fun DayBuilder.part(body: PartBuilder.() -> Unit) = PartBuilder(this.parts.size 
     .apply(parts::add)
 
 @AdventMarker
-fun DayBuilder.input(filename: () -> String): ResourceInput =
-    inputs.computeIfAbsent(filename.invoke()) { ResourceInput("/day%02d/%s".format(day, it)) }
+fun <T> DayBuilder.input(filename: String, transformation: Input.() -> T) =
+    inputs.computeIfAbsent(filename) { ResourceInput("/day%02d/%s".format(day, it)) }
+        .let { lazy { transformation(it) } }
 
 @AdventMarker
 fun PartBuilder.answer(description: String, body: () -> Int) = Answer(description, body)
