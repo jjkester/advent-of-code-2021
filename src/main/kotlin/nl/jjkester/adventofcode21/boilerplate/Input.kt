@@ -37,6 +37,10 @@ fun Input.whitespaceSeparated(): List<Input> = contents
     .splitOnRegex(Regex("\\s+", RegexOption.MULTILINE))
     .toInputList()
 
+fun Input.arrowSeparated(): List<Input> = contents
+    .splitOnRegex(Regex("\\s*->\\s*"))
+    .toInputList()
+
 // Filters
 
 fun List<Input>.notEmpty(): List<Input> = filter { it.string().isNotEmpty() }
