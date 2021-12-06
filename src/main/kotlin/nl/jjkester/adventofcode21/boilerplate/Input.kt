@@ -45,6 +45,8 @@ fun Input.arrowSeparated(): List<Input> = contents
 
 fun List<Input>.notEmpty(): List<Input> = filter { it.string().isNotEmpty() }
 
+fun List<Input>.notBlank(): List<Input> = filter { it.string().isNotBlank() }
+
 fun List<Input>.skip(n: Int): List<Input> = subList(min(this.size, n), this.size)
 
 fun List<Input>.head(size: Int): List<Input> = subList(0, min(size, this.size))
@@ -55,7 +57,7 @@ fun List<Input>.tail(size: Int): List<Input> = subList(max(0, this.size - size),
 
 fun Input.string(): String = contents
 
-fun Input.int(): Int = contents.toInt()
+fun Input.int(): Int = contents.trim().toInt()
 
 fun List<Input>.strings(): List<String> = map(Input::string)
 
