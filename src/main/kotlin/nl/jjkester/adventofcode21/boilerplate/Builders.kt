@@ -33,5 +33,5 @@ fun <T> DayBuilder.input(filename: String, transformation: Input.() -> T) =
         .let { lazy { transformation(it) } }
 
 @AdventMarker
-fun PartBuilder.answer(description: String, body: () -> Int) = Answer(description, body)
+fun PartBuilder.answer(description: String, body: () -> Number) = Answer(description, body)
     .apply(answers::add)

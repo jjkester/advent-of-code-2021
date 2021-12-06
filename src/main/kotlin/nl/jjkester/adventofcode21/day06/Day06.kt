@@ -16,27 +16,34 @@ object Day06 : D {
                 countAfterDays(initial, 80)
             }
         }
+
+        part {
+            answer("Number of lanternfish after 256 days") {
+                countAfterDays(initial, 256)
+            }
+        }
     }
 
-    fun countAfterDays(initial: List<UInt>, days: Int): Int {
-        val total = initial.toMutableList()
+    fun countAfterDays(initial: List<UInt>, days: Int): Long {
+        val adult = mutableMapOf<UInt, Long>()
+        var child = initial.map { it to 1L }
 
-        repeat(days) {
-            var new = 0
+        (1..days).forEach { day ->
+            val key = day.toUInt() % 7u
 
-            total.forEachIndexed { i, n ->
-                if (n > 0u) {
-                    total[i] = n - 1u
+            child = child.mapNotNull { (value, count) ->
+                if (value > 0u) {
+                    value - 1u to count
                 } else {
-                    total[i] = 6u
-                    ++new
+                    adult.compute(key) { _, c -> (c ?: 0L) + count }
+                    null
                 }
             }
 
-            repeat(new) { total.add(8u) }
+            adult[key]?.also { child = child + listOf(8u to it) }
         }
 
-        return total.count()
+        return adult.values.sum() + child.sumOf { it.second }
     }
 
     @JvmStatic

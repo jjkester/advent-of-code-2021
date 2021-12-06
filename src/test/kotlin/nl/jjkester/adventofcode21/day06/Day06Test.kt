@@ -17,4 +17,10 @@ internal class Day06Test {
         assertThat(Day06.countAfterDays(initial, 80))
             .isEqualTo(5934)
     }
+
+    @Test
+    fun countAfter256Days() {
+        assertThat(Day06.countAfterDays(initial, 256))
+            .isEqualTo(26984457539)
+    }
 }
