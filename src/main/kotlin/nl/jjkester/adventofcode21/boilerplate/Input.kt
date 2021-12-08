@@ -41,6 +41,10 @@ fun Input.arrowSeparated(): List<Input> = contents
     .splitOnRegex(Regex("\\s*->\\s*"))
     .toInputList()
 
+fun Input.pipeSeparated(): List<Input> = contents
+    .splitOnRegex(Regex("\\s*\\|\\s*"))
+    .toInputList()
+
 // Filters
 
 fun List<Input>.notEmpty(): List<Input> = filter { it.string().isNotEmpty() }

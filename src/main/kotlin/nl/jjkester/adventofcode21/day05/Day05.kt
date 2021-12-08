@@ -52,11 +52,6 @@ object Day05 : D {
 
     private fun Pair<Int, Int>.toPoint() = Point(first, second)
 
-    private fun <T> List<T>.toPair(): Pair<T, T> {
-        require(this.size == 2)
-        return first() to last()
-    }
-
     @JvmStatic
     fun main(args: Array<String>) {
         Day05.main()
