@@ -29,7 +29,7 @@ object Day07 : D {
     fun cheapestPositionIncreasingCost(initial: List<Int>): Int = initial.positions()
         .minOf { target ->
             initial.map { (target - it).absoluteValue }
-                .sumOf { (1..it).sum() }
+                .sumOf { it * (it + 1) / 2 }
         }
 
     private fun List<Int>.positions() = 1..(maxOrNull() ?: 0)
