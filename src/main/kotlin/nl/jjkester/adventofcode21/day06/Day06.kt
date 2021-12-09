@@ -2,8 +2,8 @@ package nl.jjkester.adventofcode21.day06
 
 import nl.jjkester.adventofcode21.boilerplate.*
 
-object Day06 : D {
-    override val day = day(6) {
+object Day06 : Day {
+    override val builder = day(6) {
         val initial by input("initial.txt") {
             commaSeparated()
                 .notBlank()

@@ -2,8 +2,8 @@ package nl.jjkester.adventofcode21.day04
 
 import nl.jjkester.adventofcode21.boilerplate.*
 
-object Day04 : D {
-    override val day = day(4) {
+object Day04 : Day {
+    override val builder = day(4) {
         val draws by input("bingo.txt") {
             sectionSeparated()
                 .first()

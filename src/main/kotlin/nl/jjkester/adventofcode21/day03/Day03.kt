@@ -3,8 +3,8 @@ package nl.jjkester.adventofcode21.day03
 import nl.jjkester.adventofcode21.boilerplate.*
 import kotlin.math.pow
 
-object Day03 : D {
-    override val day = day(3) {
+object Day03 : Day {
+    override val builder = day(3) {
         val values by input("report.txt") {
             lineSeparated()
                 .notEmpty()

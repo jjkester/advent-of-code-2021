@@ -2,8 +2,8 @@ package nl.jjkester.adventofcode21.day09
 
 import nl.jjkester.adventofcode21.boilerplate.*
 
-object Day09 : D {
-    override val day = day(9) {
+object Day09 : Day {
+    override val builder = day(9) {
         val heightmap by input("heightmap.txt") {
             lineSeparated()
                 .notBlank()

@@ -3,8 +3,8 @@ package nl.jjkester.adventofcode21.day07
 import nl.jjkester.adventofcode21.boilerplate.*
 import kotlin.math.absoluteValue
 
-object Day07 : D {
-    override val day = day(7) {
+object Day07 : Day {
+    override val builder = day(7) {
         val initial by input("crabs.txt") {
             commaSeparated()
                 .ints()

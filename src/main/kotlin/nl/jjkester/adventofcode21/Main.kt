@@ -25,18 +25,30 @@ val days = setOf(
 )
 
 fun main(args: Array<String>) {
+    days.map { it.builder.day }
+        .fold(Int.MAX_VALUE to Int.MIN_VALUE) { p, d -> minOf(p.first, d) to maxOf(p.second, d) }
+        .let { (min, max) -> (min..max).minus(days.map { it.builder.day }.toSet()) }
+        .let { missing -> require(missing.isEmpty()) { "There are days missing: ${missing.joinToString()}" } }
+
+    days.groupBy { it.builder.day }
+        .forEach { (dayNumber, objects) ->
+            require(objects.size == 1) {
+                "There is more than one implementation for day $dayNumber: ${objects.joinToString { it.javaClass.name }}"
+            }
+        }
+
     require(args.size <= 1)
 
-    days.map { it.day }
+    days.map { it.builder }
         .run {
             when (val arg = args.getOrNull(0)) {
-                "latest" -> this.maxByOrNull { it.day }?.let(::listOf)
+                "latest" -> this.maxByOrNull { it.day }?.let { listOf(it) }
                 null -> this
                 else -> arg.toIntOrNull()?.let { i -> this.filter { it.day == i } }
             } ?: emptyList()
         }
+        .asSequence()
+        .sortedBy { it.day }
         .map { it() }
-        .sorted()
-        .map { it.format() }
-        .forEach(::println)
+        .forEach { println(it.format()) }
 }

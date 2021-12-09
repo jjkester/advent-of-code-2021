@@ -2,20 +2,33 @@ package nl.jjkester.adventofcode21.boilerplate
 
 import java.lang.Integer.max
 import java.lang.Integer.min
+import java.time.Duration
+import kotlin.system.measureTimeMillis
 
 interface Input {
     val contents: String
 }
 
-class StringInput(override val contents: String) : Input
+data class StringInput(override val contents: String) : Input
 
-class ResourceInput(val resourcePath: String) : Input {
+data class ResourceInput(val resourcePath: String) : Input {
     private val resource by lazy {
         requireNotNull({}.javaClass.getResource(resourcePath)) { "Resource not found: $resourcePath" }
     }
 
     override val contents by lazy {
         resource.readText()
+    }
+}
+
+data class ProcessedInput<T : Any>(
+    private val rawInput: Input,
+    private val transformation: (Input) -> T
+) {
+    operator fun invoke(): InputResult<T> {
+        val contents: T
+        val timeInMs = measureTimeMillis { contents = transformation(rawInput) }
+        return InputResult(contents, Duration.ofMillis(timeInMs))
     }
 }
 

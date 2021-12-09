@@ -2,8 +2,8 @@ package nl.jjkester.adventofcode21.day08
 
 import nl.jjkester.adventofcode21.boilerplate.*
 
-object Day08 : D {
-    override val day = day(8) {
+object Day08 : Day {
+    override val builder = day(8) {
         val values by input("digits.txt") {
             lineSeparated()
                 .notBlank()
@@ -41,17 +41,17 @@ object Day08 : D {
 
         require(uniqueSequences.size == 10)
 
-        val one = uniqueSequences.selectDigit { it.size == 2 }
-        val four = uniqueSequences.selectDigit { it.size == 4 }
-        val seven = uniqueSequences.selectDigit { it.size == 3 }
-        val eight = uniqueSequences.selectDigit { it.size == 7 }
+        val one = uniqueSequences.single { it.size == 2 }
+        val four = uniqueSequences.single { it.size == 4 }
+        val seven = uniqueSequences.single { it.size == 3 }
+        val eight = uniqueSequences.single { it.size == 7 }
 
-        val nine = uniqueSequences.selectDigit { it.size == 6 && it.containsAll(four) }
-        val zero = uniqueSequences.selectDigit { it.size == 6 && it != nine && it.containsAll(one) }
-        val six = uniqueSequences.selectDigit { it.size == 6 && it != nine && it != zero }
-        val three = uniqueSequences.selectDigit { it.size == 5 && it.containsAll(one) }
-        val five = uniqueSequences.selectDigit { it.size == 5 && it != three && it.containsAll(six.intersect(one)) }
-        val two = uniqueSequences.selectDigit { it.size == 5 && it != three && it != five }
+        val nine = uniqueSequences.single { it.size == 6 && it.containsAll(four) }
+        val zero = uniqueSequences.single { it.size == 6 && it != nine && it.containsAll(one) }
+        val six = uniqueSequences.single { it.size == 6 && it != nine && it != zero }
+        val three = uniqueSequences.single { it.size == 5 && it.containsAll(one) }
+        val five = uniqueSequences.single { it.size == 5 && it != three && it.containsAll(six.intersect(one)) }
+        val two = uniqueSequences.single { it.size == 5 && it != three && it != five }
 
         val lookup = mapOf(
             zero to 0,
@@ -69,8 +69,6 @@ object Day08 : D {
         line.second.joinToString("") { requireNotNull(lookup[it.toSet()]).toString() }
             .toInt()
     }
-
-    fun List<Set<Char>>.selectDigit(filter: (Set<Char>) -> Boolean) = requireNotNull(filter(filter).also { require(it.size == 1) }.first())
 
     @JvmStatic
     fun main(args: Array<String>) {

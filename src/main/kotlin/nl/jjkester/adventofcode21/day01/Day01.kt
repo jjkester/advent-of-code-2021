@@ -2,8 +2,8 @@ package nl.jjkester.adventofcode21.day01
 
 import nl.jjkester.adventofcode21.boilerplate.*
 
-object Day01 : D {
-    override val day = day(1) {
+object Day01 : Day {
+    override val builder = day(1) {
         val values by input("sonar.txt") {
             lineSeparated()
                 .notEmpty()

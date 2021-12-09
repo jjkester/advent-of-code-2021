@@ -2,8 +2,8 @@ package nl.jjkester.adventofcode21.day02
 
 import nl.jjkester.adventofcode21.boilerplate.*
 
-object Day02 : D {
-    override val day = day(2) {
+object Day02 : Day {
+    override val builder = day(2) {
         val instructions by input("course.txt") {
             lineSeparated()
                 .notEmpty()
