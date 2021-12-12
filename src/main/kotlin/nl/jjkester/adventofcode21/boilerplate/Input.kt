@@ -58,6 +58,10 @@ fun Input.pipeSeparated(): List<Input> = contents
     .splitOnRegex(Regex("\\s*\\|\\s*"))
     .toInputList()
 
+fun Input.dashSeparated(): List<Input> = contents
+    .splitOnRegex(Regex("\\s*-\\s*"))
+    .toInputList()
+
 fun Input.charSeparated(): List<Input> = contents
     .map(Char::toString)
     .toInputList()
