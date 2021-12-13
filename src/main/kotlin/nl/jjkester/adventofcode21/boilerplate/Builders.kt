@@ -40,7 +40,7 @@ class PartBuilder(private val part: Int) : Builder<PartResult> {
     override operator fun invoke() = PartResult(part, answers.map { it() })
 
     @AdventMarker
-    fun answer(description: String, body: () -> Number) {
+    fun answer(description: String, body: () -> Any) {
         answers.add(AnswerBuilder(description, body))
     }
 }
@@ -54,7 +54,7 @@ class InputBuilder<T : Any>(private val input: ProcessedInput<T>) : Builder<Inpu
 }
 
 @AdventMarker
-class AnswerBuilder<T : Number>(private val description: String, private val solution: () -> T) : Builder<AnswerResult<T>> {
+class AnswerBuilder<T : Any>(private val description: String, private val solution: () -> T) : Builder<AnswerResult<T>> {
     override operator fun invoke(): AnswerResult<T> {
         val answer: T
         val timeInMs = measureTimeMillis { answer = solution() }

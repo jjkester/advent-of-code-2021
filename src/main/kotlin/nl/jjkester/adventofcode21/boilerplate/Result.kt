@@ -34,7 +34,7 @@ data class PartResult(
 
 data class InputResult<T : Any>(val contents: T, override val duration: Duration) : Result
 
-data class AnswerResult<T : Number>(
+data class AnswerResult<T : Any>(
     val description: String,
     val answer: T,
     override val duration: Duration
