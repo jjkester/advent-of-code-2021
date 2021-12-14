@@ -23,23 +23,59 @@ object Day14 : Day {
                 mostCommonMinusLeastCommon(template, rules, 10)
             }
         }
+        part {
+            answer("Quantity of most common element minus quantity of least common element after 40 steps") {
+                mostCommonMinusLeastCommon(template, rules, 40)
+            }
+        }
     }
 
-    fun mostCommonMinusLeastCommon(template: String, rules: Map<String, Char>, steps: Int): Int {
-        val counts = applySteps(template, rules, steps).groupingBy { it }.eachCount()
+    fun mostCommonMinusLeastCommon(template: String, rules: Map<String, Char>, steps: Int): Long {
+        val counts = applySteps(template, rules, steps)
+            .flatMap { (key, value) -> key.map { it to value } }
+            .groupBy { it.first }
+            .mapValues { (key, value) ->
+                if (key == template.first() || key == template.last()) {
+                    (value.sumOf { it.second } + 1) / 2
+                } else {
+                    value.sumOf { it.second } / 2
+                }
+            }
 
         return counts.maxOf { it.value } - counts.minOf { it.value }
     }
 
-    fun applySteps(template: String, rules: Map<String, Char>, times: Int): String {
-        return (1..times).fold(template) { previous, _ ->
+    fun applySteps(template: String, rules: Map<String, Char>, times: Int): Map<String, Long> {
+        return (1..times).fold(template.occurrence()) { previous, _ ->
             previous.apply(rules)
         }
     }
 
-    private fun String.apply(rules: Map<String, Char>): String {
-        return first() + windowedSequence(2)
-            .flatMap { it -> sequenceOf(rules[it]!!, it.last()) }
-            .joinToString("")
+    fun String.occurrence(): Map<String, Long> {
+        return windowedSequence(2)
+            .groupingBy { it }
+            .eachCount()
+            .mapValues { it.value.toLong() }
+    }
+
+    private fun Map<String, Long>.apply(rules: Map<String, Char>): Map<String, Long> {
+        val result = mutableMapOf<String, Long>()
+
+        forEach { (pair, count) ->
+            val insertedChar = rules[pair]!!
+            val newPairLeft = buildString {
+                append(pair[0])
+                append(insertedChar)
+            }
+            val newPairRight = buildString {
+                append(insertedChar)
+                append(pair[1])
+            }
+
+            result.compute(newPairLeft) { _, current -> current?.plus(count) ?: count }
+            result.compute(newPairRight) { _, current -> current?.plus(count) ?: count }
+        }
+
+        return result
     }
 }

@@ -1,5 +1,6 @@
 package nl.jjkester.adventofcode21.day14
 
+import nl.jjkester.adventofcode21.day14.Day14.occurrence
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -26,32 +27,51 @@ internal class Day14Test {
     )
 
     @Test
+    fun occurrence() {
+        assertThat("ABCDABCD".occurrence())
+            .containsExactlyInAnyOrderEntriesOf(
+                mapOf(
+                    "AB" to 2L,
+                    "BC" to 2L,
+                    "CD" to 2L,
+                    "DA" to 1L,
+                )
+            )
+    }
+
+    @Test
     fun applySteps1() {
         assertThat(Day14.applySteps(template, rules, 1))
-            .isEqualTo("NCNBCHB")
+            .isEqualTo("NCNBCHB".occurrence())
     }
 
     @Test
     fun applySteps2() {
         assertThat(Day14.applySteps(template, rules, 2))
-            .isEqualTo("NBCCNBBBCBHCB")
+            .isEqualTo("NBCCNBBBCBHCB".occurrence())
     }
 
     @Test
     fun applySteps3() {
         assertThat(Day14.applySteps(template, rules, 3))
-            .isEqualTo("NBBBCNCCNBBNBNBBCHBHHBCHB")
+            .isEqualTo("NBBBCNCCNBBNBNBBCHBHHBCHB".occurrence())
     }
 
     @Test
     fun applySteps4() {
         assertThat(Day14.applySteps(template, rules, 4))
-            .isEqualTo("NBBNBNBBCCNBCNCCNBBNBBNBBBNBBNBBCBHCBHHNHCBBCBHCB")
+            .isEqualTo("NBBNBNBBCCNBCNCCNBBNBBNBBBNBBNBBCBHCBHHNHCBBCBHCB".occurrence())
     }
 
     @Test
     fun mostCommonMinusLeastCommon10() {
         assertThat(Day14.mostCommonMinusLeastCommon(template, rules, 10))
             .isEqualTo(1588)
+    }
+
+    @Test
+    fun mostCommonMinusLeastCommon40() {
+        assertThat(Day14.mostCommonMinusLeastCommon(template, rules, 40))
+            .isEqualTo(2188189693529)
     }
 }
