@@ -82,6 +82,8 @@ fun List<Input>.tail(size: Int): List<Input> = subList(max(0, this.size - size),
 
 fun Input.string(): String = contents
 
+fun Input.char(): Char = contents.first()
+
 fun Input.int(): Int = contents.trim().toInt()
 
 fun List<Input>.strings(): List<String> = map(Input::string)
