@@ -17,6 +17,7 @@ import nl.jjkester.adventofcode21.day12.Day12
 import nl.jjkester.adventofcode21.day13.Day13
 import nl.jjkester.adventofcode21.day14.Day14
 import nl.jjkester.adventofcode21.day15.Day15
+import nl.jjkester.adventofcode21.day16.Day16
 
 val days = setOf(
     Day01,
@@ -34,6 +35,7 @@ val days = setOf(
     Day13,
     Day14,
     Day15,
+    Day16,
 )
 
 fun main(args: Array<String>) {
