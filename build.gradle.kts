@@ -14,6 +14,7 @@ repositories {
 
 dependencies {
     implementation(kotlin("reflect"))
+    implementation("com.google.code.gson:gson:2.8.9")
     testImplementation(kotlin("test"))
     testImplementation("org.assertj:assertj-core:3.21.0")
 }
