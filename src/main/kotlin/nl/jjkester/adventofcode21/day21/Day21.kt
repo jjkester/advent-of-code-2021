@@ -21,11 +21,30 @@ object Day21 : Day {
                 playDeterministicGame(startingPositions)
             }
         }
+        part {
+            answer("Number of universes where the winning player won") {
+                playQuantumGame(startingPositions)
+            }
+        }
     }
 
     fun playDeterministicGame(startingPositions: Pair<Int, Int>): Int {
-        return Game(startingPositions.first, startingPositions.second, DeterministicDice()).play().let {
+        return Game(startingPositions.first, startingPositions.second, DeterministicDice(), 1000).play().let {
             it.losingScore * it.diceRolls
         }
+    }
+
+    fun playQuantumGame(startingPositions: Pair<Int, Int>): Long {
+        val game = Game(startingPositions.first, startingPositions.second, DiracDice(), 21)
+
+        game.play()
+
+        val counts = mutableMapOf(Player.One to 0L, Player.Two to 0L)
+
+        game.gameStates.forEach { (state, count) ->
+            counts.computeIfPresent(state.maxByOrNull { it.score }!!.player) { _, c -> c + count }
+        }
+
+        return counts.maxOf { it.value }
     }
 }
