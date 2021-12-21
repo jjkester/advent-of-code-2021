@@ -20,6 +20,7 @@ import nl.jjkester.adventofcode21.day15.Day15
 import nl.jjkester.adventofcode21.day16.Day16
 import nl.jjkester.adventofcode21.day17.Day17
 import nl.jjkester.adventofcode21.day18.Day18
+import nl.jjkester.adventofcode21.day19.Day19
 import nl.jjkester.adventofcode21.day20.Day20
 import nl.jjkester.adventofcode21.day21.Day21
 
@@ -42,7 +43,7 @@ val days = setOf(
     Day16,
     Day17,
     Day18,
-//    Day19,
+    Day19,
     Day20,
     Day21,
 )
@@ -51,7 +52,7 @@ fun main(args: Array<String>) {
     days.map { it.builder.day }
         .fold(Int.MAX_VALUE to Int.MIN_VALUE) { p, d -> minOf(p.first, d) to maxOf(p.second, d) }
         .let { (min, max) -> (min..max).minus(days.map { it.builder.day }.toSet()) }
-//        .let { missing -> require(missing.isEmpty()) { "There are days missing: ${missing.joinToString()}" } }
+        .let { missing -> require(missing.isEmpty()) { "There are days missing: ${missing.joinToString()}" } }
 
     days.groupBy { it.builder.day }
         .forEach { (dayNumber, objects) ->
