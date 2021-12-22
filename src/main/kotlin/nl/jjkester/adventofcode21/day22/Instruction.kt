@@ -1,31 +1,12 @@
 package nl.jjkester.adventofcode21.day22
 
-data class Instruction(val isOn: Boolean, val region: Region)
-
-data class Region(val x: IntRange, val y: IntRange, val z: IntRange) : Iterable<Cube> {
-    override fun iterator() = iterator {
-        x.forEach { xi ->
-            y.forEach { yi ->
-                z.forEach { zi ->
-                    yield(Cube(xi, yi, zi))
-                }
-            }
-        }
-    }
+data class Region(val isOn: Boolean, val x: IntRange, val y: IntRange, val z: IntRange) {
+    val size: Long
+        get() = x.count().toLong() * y.count().toLong() * z.count().toLong()
 }
 
-data class Cube(val x: Int, val y: Int, val z: Int)
-
-fun Instruction.limitTo(region: Region): Instruction? {
-    val newRegion = this.region.limitTo(region)
-
-    return if (newRegion == null) {
-        null
-    } else if (region == newRegion) {
-        this
-    } else {
-        copy(region = newRegion)
-    }
+fun Region.overlapsWith(other: Region): Boolean {
+    return x.overlapsWith(other.x) && y.overlapsWith(other.y) && z.overlapsWith(other.z)
 }
 
 fun Region.limitTo(other: Region): Region? {
@@ -43,9 +24,12 @@ fun Region.limitTo(other: Region): Region? {
 }
 
 private fun IntRange.limitTo(other: IntRange): IntRange {
-    return if (other.first <= last || other.last >= first) {
+    return if (overlapsWith(other)) {
         maxOf(first, other.first)..minOf(last, other.last)
     } else {
         IntRange.EMPTY
     }
 }
+
+private fun IntRange.overlapsWith(other: IntRange) =
+    other.first <= last && other.last >= first
